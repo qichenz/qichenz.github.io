@@ -1,0 +1,34 @@
+<header class="site-header">
+
+  <div class="wrapper">
+    {% if page.title == "quoi" %}
+      <img class="post-header-banner" src="/assets/header_about.png" />
+    {% endif %}
+    {% if page.title == "quid" %}
+      <img class="post-header-banner" src="/assets/header_blog.png" />
+    {% endif %}
+    {% if page.title == "pro quo" %}
+      <img class="post-header-banner" src="/assets/header_work.png" />
+    {% endif %}
+    {% if page.title == "category archive" %}
+      <img class="category-header" src="/assets/header_category.png" />&nbsp; / &nbsp;{{ page.category }}
+    {% endif %}
+    {% if page.title == "tag" %}
+      <img class="tag-header" src="/assets/header_tag.png" />&nbsp; / &nbsp;{{ page.tag }}
+    {% endif %}
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg enable-background="new 0 0 24 24" fill="#828282" id="Layer_1" version="1.0" viewBox="0 0 24 24" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><circle cx="12" cy="12" r="2"/><circle cx="12" cy="5" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+      </a>
+
+      <div class="trigger">
+          <a class="page-link" href="/about/">&nbsp;quoi&nbsp;</a>
+          <a class="page-link" href="/blog/">&nbsp;quid&nbsp;</a>
+          <a class="page-link" href="/work/">&nbsp;pro quo&nbsp;</a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
