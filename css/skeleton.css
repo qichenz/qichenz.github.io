@@ -125,7 +125,9 @@ body {
   line-height: 1.6;
   font-weight: 400;
   font-family: "Courier New", Courier, monospace;
-  color: #000; }
+  color: #000; 
+  background-color: #ffe2d7;
+      }
 
 
 /* Typography
@@ -160,7 +162,7 @@ p {
 /* Links
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 a {
-  color: #1EAEDB; }
+  color: #ffa07a; }
 a:hover {
   color: #000000; }
 
