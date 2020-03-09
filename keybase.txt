@@ -1,0 +1,75 @@
+==================================================================
+https://keybase.io/wiscotheque
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://quickcachemo.net
+  * I am wiscotheque (https://keybase.io/wiscotheque) on keybase.
+  * I have a public key with fingerprint 5FAE 3873 F097 4B6E 9D2B  5389 40EB 9560 FAF3 A05E
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "0120e838b4adebeda5851abbff80076f5f46007da82c85ce0b0367073d764efc48730a",
+      "fingerprint": "5fae3873f0974b6e9d2b538940eb9560faf3a05e",
+      "host": "keybase.io",
+      "key_id": "40eb9560faf3a05e",
+      "kid": "0101146703c8cbfa8b53e3ee4cb5b4ba5e5835daaff76ebd1eb1ed115c8c2f9cd2860a",
+      "uid": "5848ecb9a9458e006f1930584ced9019",
+      "username": "wiscotheque"
+    },
+    "service": {
+      "hostname": "quickcachemo.net",
+      "protocol": "http:"
+    },
+    "type": "web_service_binding",
+    "version": 1
+  },
+  "ctime": 1583715564,
+  "expire_in": 157680000,
+  "prev": "dd506ca4e4c0c3023a98e7c2d8c36340274796c43b1017c8f1c1dc83296f995e",
+  "seqno": 21,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v2.1.13
+Comment: https://keybase.io/crypto
+
+yMN1AnicbZJ/TFVlGMcvF2RyneNXZWkSnHGX0wu85/c5xIBAAwN0TnCC8uOc97wH
+zoB74d5zQQKaQkMHSSSQAxwZ1AizDQgTKBogqSGliEKZgZWkLlibbGko2XuZ/tdf
+5z3v830+7/f5vu/oWneDyS36z8aspcWTGW6XhludhgzUMF9KyDalhAgvJXLRygfl
+KcihZ+ZqChFOAJICSKAFmZEUJCNFYgWWlGRZVQUAeE5lVYbDC0USKCiwEAEZ0BwP
+eFrhOQapkBF4GkiEhVA1azayF9g1q46xrCohGpdUIPKMzCFRoWSWFkQGIFlkOaBK
+Ki0BFuHGHJvD1YHNyZIDhWo2vId/Mlfs/Y/+mW9Akgx2QkMByqokYDyiEWKgzMqM
+LLGIFWhWkSRV5TkkKySSSaSQJIvllCpChRK4Fd/OFRwrMAKCsiiJDCsgADiVFGmA
+dyFSRECKLqED2a1SPsLqYs0BbXoOKnQiotxC4EKRBpErW9cwT0WFTg3mQgnmoHxb
+qBXpGFFgt+k2aMvD1RxdLwh3NeslBStIJGc+5WTKmlXBaeKGImR3aDYrEU5iJdQ1
+F5jEg/Eky3KMhUAHCjQ7ytRcCpbn8JUB4DoGFWGkorCAgxKDMwGQBhQtiQLiIaUI
+kOZoBlA8w4scZGgZZ8lDQSUhqUCBpkROFcWVrB2o0GojwikS+5SyMdOhZVsl3WnH
+c48M7/cwuJkMnquMrmdmMHn5PHt8+5O8/+UXfikosy1fyP2ifKfb9lG/oKamFBAY
++7Bpb83yqxP3tkfcOj1V8Ufjj6HIDg+bHxh9QOXBpR7fHZFzdGKEZ/T8l2dffvTp
++qwF98T5vm0DY4RHVfPm3h7z7Z/L/N705oOzR1d/1B8ZWdxh+imW/6xy04avUEX3
+DB32Tt2NF3Pyd53xC9m09MF031KzPn9+V01hAJhadyjtYBqVfDt5mtzY8PrsTOo1
+v+5/UALfYQ653FnlHZ//65UfloKiZ4/9tu2m6ZZPvJnZPZRi3tFVlGQuW37r4zUT
+VIplpP/+nW9N/vvSfF8b6dmzZ/XO2oCtn1cnUH2twTHBb6S2HS65/qSmfsb3bvBU
+tdulEL6qLqHFOBblXTo+WJm8MJgw/ShssuOF94cHy+aChty9vNQTlnMffnKfuhgV
+MPgkscWX69zgH215HFUxUL/FGfaesSZmswFw5FqauHgm7VpnyvB3b1NxdrlMDyLr
+H1a3XHek7s3KONVKLC6cusp19bpXvNTY8Hjub7mxO72i3WbMPf78PXA2VQ05cjkw
+duDrv1I7nzsdmP773QOveOyLNoH+m6t0x7n2gaaThxxHvm+zXFhTO6y0uS81095X
+F8uSF7b4j6031ncf3Xrc0jZZu/tBt/+VbyZn362rbj8xNN5zZy7Ox7N5vEuqnWDj
+etcVndeOpW9sjimPiE8qbrmR9x8nRb3/
+=Tcwk
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/wiscotheque
+
+==================================================================
