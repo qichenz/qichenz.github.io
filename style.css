@@ -1,0 +1,709 @@
+/* Shared styles — follows layout.md
+   title font: Salvaje Display (fonts/), body font: Courier New
+   margin: 50px top / left / right on every page */
+
+@font-face {
+  font-family: "Salvaje Display";
+  src: url("fonts/SalvajeDisplay-Regular.woff2") format("woff2"),
+       url("fonts/SalvajeDisplay-Regular.woff") format("woff"),
+       url("fonts/SalvajeDisplay-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Salvaje Display";
+  src: url("fonts/SalvajeDisplay-Italic.woff2") format("woff2"),
+       url("fonts/SalvajeDisplay-Italic.woff") format("woff"),
+       url("fonts/SalvajeDisplay-Italic.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  /* palette drawn from the inspo folders: paper, leather, gilt, stoneware */
+  --paper: #d6d4d0;
+  --ink: #2b1d16;
+  --muted: #7d6a5a;
+  --oxblood: #7a2e22;
+  --gilt: #a9812f;
+  --rule: #d9ccb4;
+
+  --title: "Salvaje Display", Georgia, serif;
+  --body: "Courier New", Courier, monospace;
+  --page-margin: 50px;
+
+  /* colours that change in dark mode (the dark values are at the end of this file) */
+  --bar: #000;                 /* link underlines, the bar behind a hovered link, the footer, the light/dark switch */
+  --bar-ink: #fff;             /* text on that bar */
+  --edge-a: #efe6d2;           /* the edges of the pages lying under the open page: light, */
+  --edge-b: #cfc3aa;           /* and the shadow lines between them */
+  --veil: 226, 224, 220;       /* the wash laid over the desk while a book opens (r, g, b) */
+}
+
+* { box-sizing: border-box; }
+
+/* the room: a wall of white-painted brick, on every page (images/wall-brick.webp, a web-sized
+   copy of the photo images/white_brick.jpg). The earlier pale-wood wall is still in
+   images/wall.webp (tools/make_wall.py), unused. */
+html {
+  min-height: 100%;
+  background: #d6d4d0 url("images/wall-brick.webp") center top / cover no-repeat fixed;
+}
+
+body {
+  margin: 0;
+  padding: var(--page-margin) var(--page-margin) 80px;
+  min-height: 100vh;
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+/* links: underlined in black; on hover (or keyboard focus) white text on a black bar */
+a { color: inherit; text-decoration: underline; text-decoration-color: var(--bar); text-underline-offset: 4px; transition: letter-spacing .15s ease-out; }
+a:hover, a:focus-visible { background: var(--bar); color: var(--bar-ink); font-weight: 700; text-decoration-color: var(--bar); outline: none; letter-spacing: .08em; }   /* (the letters spread a little) */
+/* page titles keep their own look: no underline, no black bar */
+h1 a { text-decoration: none; }
+h1 a:hover, h1 a:focus-visible { background: none; color: var(--oxblood); font-weight: 400; }
+/* the books are picture links: they brighten instead */
+a.book:hover, a.book:focus-visible { background: none; }
+
+/* ---------- page heading ---------- */
+.page-head { margin: 0 0 32px; }
+.back { font-size: 14px; }                 /* small link home, in place of a page title */
+h1 {
+  margin: 0;
+  font-family: var(--title);
+  font-weight: 400;
+  font-size: clamp(56px, 9vw, 132px);
+  line-height: 0.95;
+  text-wrap: balance;
+}
+h1 em { font-style: italic; color: var(--oxblood); }
+
+h2 {
+  margin: 56px 0 12px;
+  font-family: var(--title);
+  font-weight: 400;
+  font-size: 36px;
+  line-height: 1.1;
+}
+
+.content { max-width: 62ch; }
+.content p { margin: 0 0 1.2em; }
+.placeholder { color: var(--muted); }
+
+/* ---------- home: desk, book pile, mug ----------
+   The desk and books are rendered by tools/make_books.py, which also writes
+   the positions to stack.css. The mug and steam come from a photo. */
+/* the scene is pinned to the bottom of the page so the desk's legs run off it */
+.home-page { display: flex; flex-direction: column; padding-bottom: 0; }
+.home {
+  margin: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;        /* everything hangs off the left margin */
+}
+.site-title {
+  font-size: clamp(30px, 4.5vw, 68px);
+  line-height: 1.25;
+  margin-bottom: 40px;
+  /* one line while it fits; in a very narrow window the name breaks onto two */
+}
+
+.stack {
+  margin-top: auto;               /* push the scene down to the bottom edge */
+  /* the desk is half the page wide; books and mug scale with it */
+  width: clamp(280px, 50vw, 840px);
+  max-width: 100%;
+  container-type: inline-size;
+}
+
+/* --- postcards pinned to the wall above the desk (sizes follow the desk's width).
+       Each picture includes its own margin for the shadow, hence the offsets. --- */
+.postcards { position: relative; width: 117cqw; height: 25cqw; pointer-events: none;
+  --card-lit: brightness(1.13); }          /* how much a postcard lights up under the pointer (dark mode: see the end of this file) */
+.postcard { position: absolute; margin: 0; display: block; height: auto; }
+.postcard img { display: block; width: 100%; height: auto; }
+/* the name card turns over when clicked (home.js puts .is-flipped on the button): its back is a
+   blank card (images/postcard-name-back.webp) with a note written on it in index.html.
+   Only the card itself (not its shadow margin) takes the click. */
+.card-flip { display: block; position: relative; width: 100%; padding: 0; border: 0; background: none; font: inherit; color: inherit;
+  pointer-events: none; perspective: 150cqw; }
+.card-flip::after { content: ""; position: absolute; inset: 11.2% 7.8%; pointer-events: auto; cursor: pointer; }
+.card-flip:focus-visible { outline: none; }
+.card-flip:hover img, .card-flip:focus-visible img { filter: var(--card-lit); }
+.card-turn { display: block; position: relative; transform-style: preserve-3d; transition: transform .6s cubic-bezier(.4, .1, .3, 1); }
+.card-flip.is-flipped .card-turn { transform: rotateY(180deg); }
+.card-front, .card-back { -webkit-backface-visibility: hidden; backface-visibility: hidden; }
+.card-back { position: absolute; inset: 0; display: block; transform: rotateY(180deg); }
+/* the note: typed in three lines in the middle of the card (the card is the picture less its shadow margin) */
+.card-note { position: absolute; inset: 11.2% 7.8%; padding: 0 .5cqw; display: flex; flex-flow: row wrap; align-content: center; justify-content: center; gap: 0 1ch;
+  font-family: var(--body); font-size: 2.5cqw; font-weight: 400; line-height: 1.6; letter-spacing: 0; text-align: center; color: #2b211e; }
+.card-note span { white-space: nowrap; }
+.card-note span { flex-basis: 100%; }                         /* one span to a line: the line breaks are set in index.html */
+.card-note b { font-weight: 700; }
+/* the dog's card is a button: it barks twice (bark.js). Again only the card itself, tilted as drawn, takes the click */
+button.postcard { padding: 0; border: 0; background: none; font: inherit; color: inherit; pointer-events: none; }
+button.postcard::after { content: ""; position: absolute; inset: 20% 15%; transform: rotate(-6.5deg); pointer-events: auto; cursor: pointer; }
+button.postcard:hover img, button.postcard:focus-visible img { filter: var(--card-lit); }
+button.postcard:focus-visible { outline: none; }
+button.postcard.is-barking img { filter: none; animation: postcard-bark .33s ease-out .05s 3; transform-origin: 47% 12%; }   /* a jolt on its pin with each of the recording's three barks */
+@keyframes postcard-bark { 0% { transform: rotate(0); } 14% { transform: rotate(-1.6deg) scale(1.015); } 40% { transform: rotate(.7deg); } 70%, 100% { transform: rotate(0); } }
+.postcard--name  { left: 27.59cqw; top: -2.41cqw; width: 43.82cqw; }
+.postcard--left  { left: -0.49cqw; top: 1.63cqw;  width: 29.97cqw; }
+/* the third card does nothing when clicked, but lights up under the pointer like the other two */
+img.postcard { pointer-events: auto; }
+img.postcard:hover { filter: var(--card-lit); }
+.postcard--right { left: 70.76cqw; top: 17.5cqw;  width: 29.49cqw; transform: rotate(7deg); }   /* starts below the name card; turned a further 7deg clockwise (12deg in all) */
+
+.books { position: relative; }
+.desk { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+
+/* --- footer: at the foot of every page, in the bottom right-hand corner. It ends 14px from the
+       right-hand edge, exactly under the light/dark switch (.theme-switch), and sits as far from the
+       bottom edge as the switch does from the top. On the book pages it lies in the page's bottom
+       padding, so it comes under the book when the book is taller than the window. --- */
+body { position: relative; }
+.site-footer {
+  position: absolute; right: 14px; bottom: 14px;
+  color: var(--bar);
+  font-size: clamp(9px, 1.7vw, 12px);
+  line-height: 1.2;
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* each book is one rendered image: spine, top cover and page edges */
+.book { position: absolute; display: block; }
+.book img { display: block; width: 100%; height: auto; }
+.book:hover img, .book:focus-visible img { filter: brightness(1.18) saturate(1.06); }
+.book:focus-visible { outline: none; }
+
+/* --- a tiny shelf on the wall above the cat (the desk's own wood: images/shelf.webp), with a boombox on it (a cut-out photo: images/boombox.webp; put together in index.html).
+       Placed by hand: in the stretch of wall between the pile of books and the lamp, more or less
+       over the cat (stack.css puts the cat at left 61.5%, width 32%), the board a little above its ears. --- */
+.books { --shelf-x: 58cqw; --shelf-y: -8.4cqw; --shelf-w: 36cqw; }      /* the shelf's left edge, top and width (the waveform below follows these) */
+.shelf { position: absolute; z-index: 1; left: var(--shelf-x); top: var(--shelf-y); width: var(--shelf-w); height: auto; overflow: visible; pointer-events: none; }
+/* the waveform above the boombox's handle: a row of thin bright-green bars, exactly as wide as the
+   handle (which starts .1231 of the shelf's width in, is .7495 of it wide, its top .1122 of it down)
+   and short. It fades in when the boombox starts to play and out when it stops; the bars (made by
+   home.js, each with its own height --h, speed and delay) rise and fall while it plays. */
+.wave { position: absolute; z-index: 1; pointer-events: none;
+  left: calc(var(--shelf-x) + var(--shelf-w)*.1231); width: calc(var(--shelf-w)*.7495);
+  height: calc(var(--shelf-w)*.066); top: calc(var(--shelf-y) + var(--shelf-w)*(.1122 - .066 - .016));
+  display: flex; align-items: center; justify-content: space-between;
+  opacity: 0; transition: opacity 2s ease; }                    /* (fading out) */
+.shelf.is-playing + .wave { opacity: 1; transition-duration: 1.8s; }      /* (fading in) */
+.wave i { display: block; width: 1.1%; height: 100%; border-radius: 99px; background: #0fc03c;        /* (a deeper green on the white wall; brighter in dark mode, below) */
+ 
+  transform: scaleY(.1); animation: wave-bar .8s ease-in-out infinite alternate paused; }
+.shelf.is-playing + .wave i { animation-play-state: running; }
+@keyframes wave-bar { from { transform: scaleY(.1); } to { transform: scaleY(var(--h, 1)); } }
+/* click the boombox and it plays (home.js puts .is-playing on the shelf): the play key sinks into
+   its slot and stays down, and the cassette's reels turn; click again and the key jumps back up and
+   the reels stop where they are. Lengths here are pixels of the photograph (see index.html). */
+.bb-hit { pointer-events: auto; cursor: pointer; outline: none; }
+.bb-hit:focus-visible { stroke: var(--ink, #2a1a10); stroke-width: 5; stroke-dasharray: 14 10; }
+.bb-key { transition: transform .05s ease-out; }                      /* (released: it jumps back) */
+.bb-key-shade { opacity: 0; transition: opacity .05s ease-out; }
+.shelf.is-playing .bb-key { transform: translateY(8px); transition: transform .09s ease-in; }
+.shelf.is-playing .bb-key-shade { opacity: .22; }
+.bb-teeth { fill: none; stroke: #d9d2bd; stroke-width: 1.7; stroke-linecap: round; opacity: .6; }
+.bb-reel { transform-origin: 0 0; animation: bb-spin 2.8s linear infinite paused; }
+.bb-reel-r { animation-duration: 2.3s; }
+.shelf.is-playing .bb-reel { animation-play-state: running; }
+@keyframes bb-spin { to { transform: rotate(-360deg); } }
+
+/* --- the cat: asleep on the desk (drawn in index.html; placed by stack.css) --- */
+.cat { position: absolute; z-index: 3; height: auto; overflow: visible; pointer-events: none; }
+.cat-body { transform-box: fill-box; transform-origin: 50% 100%; animation: cat-breathe 4.6s ease-in-out infinite; }
+.cat-head { transform-box: fill-box; transform-origin: 60% 100%; animation: cat-nod 4.6s ease-in-out infinite; }
+/* click the cat and it purrs: small marks pulse around it while the purr plays (home.js) */
+.cat-body, .cat-head, .cat-tail, .cat > ellipse, .cat > path { pointer-events: auto; cursor: pointer; }
+.cat-purr { opacity: 0; pointer-events: none; transform-box: fill-box; transform-origin: 50% 80%; }
+.cat.is-purring .cat-purr { animation: cat-purr .6s ease-out infinite both; }
+@keyframes cat-purr {
+  0%   { opacity: 0;   transform: scale(.97); }
+  25%  { opacity: .95; transform: scale(1); }
+  70%  { opacity: .95; transform: scale(1.02); }
+  100% { opacity: 0;   transform: scale(1.04); }
+}
+/* the tail hangs over the front of the desk and swings slowly from side to side, its end trailing behind */
+.cat-tail-a { transform-origin: 0 0; animation: cat-tail-a 3.6s ease-in-out infinite alternate; }
+.cat-tail-b { transform-origin: 0 0; animation: cat-tail-b 3.6s ease-in-out -0.5s infinite alternate; }
+/* petted (clicked): for as long as the purr plays, the swing quickens and a livelier swish is laid over it (home.js) */
+.cat-tail-swish { transform-origin: 0 0; }
+@keyframes cat-breathe { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(1.028); } }
+@keyframes cat-nod { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-1.2px); } }
+@keyframes cat-tail-a { from { transform: rotate(-13deg); } to { transform: rotate(15deg); } }
+@keyframes cat-tail-b { from { transform: rotate(18deg); } to { transform: rotate(-22deg); } }
+
+/* --- mug: stands on the top cover of the first book --- */
+.mug { position: absolute; z-index: 6; pointer-events: none; }
+.mug-photo { display: block; width: 100%; height: auto; }
+
+/* --- lava lamp on the right of the desk: a photo, with moving wax drawn over the glass --- */
+.lamp {
+  position: absolute; z-index: 3;
+  /* it is a button: click to switch the lamp off and on */
+  display: block; margin: 0; padding: 0; border: 0; background: none; font: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.lamp:focus-visible { outline: 2px solid var(--bar); outline-offset: 4px; }
+.lamp-dark { opacity: 0; transition: opacity .9s ease; }
+.lamp.is-off .lamp-dark { opacity: 1; }           /* fully dark: the wax can't be seen */
+.lamp.is-off .lava, .lamp.is-off .lava-pool, .lamp.is-off .lava-cap { animation-play-state: paused; }
+.lamp img { display: block; width: 100%; height: auto; }
+.lamp svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.lava, .lava-pool, .lava-cap { transform-box: fill-box; transform-origin: 50% 50%; }
+/* --rise / --drift are set per blob in index.html (SVG units) */
+.lava { animation: lava-rise 34s ease-in-out infinite; }
+.lava-1 { animation-duration: 38s; animation-delay: -6s; }
+.lava-2 { animation-duration: 47s; animation-delay: -29s; }
+.lava-3 { animation-duration: 31s; animation-delay: -14s; }
+.lava-4 { animation-duration: 53s; animation-delay: -40s; }
+.lava-5 { animation-duration: 26s; animation-delay: -3s; }
+.lava-pool { animation: lava-breathe 17s ease-in-out infinite; }
+.lava-cap  { animation: lava-breathe 23s ease-in-out infinite reverse; }
+@keyframes lava-rise {
+  0%   { transform: translate(0, 0) scale(1, 1); }
+  10%  { transform: translate(calc(var(--drift) * .1), calc(var(--rise) * -.12)) scale(.84, 1.24); }
+  30%  { transform: translate(calc(var(--drift) * .6), calc(var(--rise) * -.62)) scale(.9, 1.06); }
+  46%  { transform: translate(var(--drift), calc(var(--rise) * -1)) scale(.82, .8); }
+  54%  { transform: translate(var(--drift), calc(var(--rise) * -.98)) scale(.86, .76); }
+  76%  { transform: translate(calc(var(--drift) * .5), calc(var(--rise) * -.5)) scale(.92, 1.04); }
+  92%  { transform: translate(calc(var(--drift) * .1), calc(var(--rise) * -.08)) scale(1.02, .96); }
+  100% { transform: translate(0, 0) scale(1, 1); }
+}
+@keyframes lava-breathe {
+  0%, 100% { transform: scale(1, 1); }
+  50%      { transform: scale(.92, 1.2); }
+}
+
+/* --- steam: real steam lifted from the mug photo, drifting upward --- */
+.steam {
+  position: absolute;
+  left: 16.9%;
+  width: 59.4%;
+  bottom: 91%;
+  aspect-ratio: 340 / 615;        /* (the picture is 340 x 725: shown about 15% shorter, so the steam does not rise as high) */
+  -webkit-mask-image: linear-gradient(to top, transparent 0%, #000 12%, #000 70%, transparent 100%);
+          mask-image: linear-gradient(to top, transparent 0%, #000 12%, #000 70%, transparent 100%);
+}
+.wisp {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transform-origin: 50% 100%;
+  animation: steam 9s linear infinite;
+  /* the photo's steam is blue-grey: turn it pure white, with a faint grey halo so that it still
+     shows against the white brick wall */
+  filter: brightness(0) invert(1) drop-shadow(0 0 2px rgba(70, 62, 54, .38));
+}
+.wisp-2 { animation-name: steam-b; animation-delay: -4.5s; transform-origin: 40% 100%; }
+@keyframes steam {
+  0%   { opacity: 0;   transform: translateY(9%)  scaleX(.92) skewX(0deg); }
+  25%  { opacity: .9; }
+  60%  { opacity: .65; transform: translateY(-3%) scaleX(1.04) skewX(-2.5deg); }
+  100% { opacity: 0;   transform: translateY(-11%) scaleX(1.16) skewX(3deg); }
+}
+@keyframes steam-b {
+  0%   { opacity: 0;   transform: translateY(9%)  scaleX(-.92) skewX(0deg); }
+  25%  { opacity: .75; }
+  60%  { opacity: .55; transform: translateY(-3%) scaleX(-1.04) skewX(2.5deg); }
+  100% { opacity: 0;   transform: translateY(-11%) scaleX(-1.16) skewX(-3deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lava, .lava-pool, .lava-cap { animation-play-state: paused; }
+  .wisp { animation: none; opacity: .75; }
+  .wisp-2 { display: none; }
+  .cat-body, .cat-head, .cat-tail-a, .cat-tail-b { animation: none; }
+  .cat.is-purring .cat-purr { animation: none; opacity: .95; }
+  .bb-reel { animation: none; }
+  .wave i { animation: none; transform: scaleY(var(--h, 1)); }
+  .bb-key, .bb-key-shade { transition: none; }
+  button.postcard.is-barking img { animation: none; }
+  .card-turn { transition: none; }
+}
+
+/* Narrow or upright windows (phones, a desktop window pulled narrow): the wide-screen rule above
+   would leave a small scene at the bottom of a tall, empty wall. Here instead
+   - the scene is as wide as the page allows (the desk reaches 17% past this box - stack.css),
+     held back only if that would make it too tall for the window;
+   - whatever height is left over is shared out: some above the postcards, rather more between
+     them and the desk, so the name card hangs in the upper part of the wall, as pictures do.
+   Wide (landscape) windows are not affected. */
+@media (max-width: 760px), (max-aspect-ratio: 1/1) {
+  .stack {
+    width: min(85%, 68vh);
+    margin-top: 0;
+    flex: 1;
+    display: grid;
+    grid-template-rows: minmax(0, 2fr) auto minmax(0, 3fr) auto;
+    grid-template-columns: 100%;          /* (the postcards' row is wider than the box; it must not widen the books) */
+  }
+  .postcards { grid-row: 2; }
+  .books { grid-row: 4; }
+  @supports (height: 1svh) { .stack { width: min(85%, 68svh); } }   /* phones: the height with the browser's bars showing */
+}
+@media (max-width: 560px) {
+  /* phones: the postcards a little larger than the desk's scale gives, so the name reads easily
+     (as large as fits: the right-hand card then ends level with the desk) */
+  .postcards { width: 100cqw; transform: scale(1.16); transform-origin: 0 100%; }   /* (narrower box, so that enlarged it does not make the page scroll sideways) */
+}
+
+/* ---------- the open book (inner pages) and the opening animation (home.js) ---------- */
+/* each book's cloth and the ink stamped on it, as in tools/make_books.py */
+.book-past-work         { --cloth: #4a281b; --cloth-dark: #351b12; --cover-ink: #f0c44e; }
+.book-present-interests { --cloth: #8aa3c0; --cloth-dark: #6c86a6; --cover-ink: #0e1a44; }
+.book-future-theories   { --cloth: #daa640; --cloth-dark: #b98830; --cover-ink: #342614; }
+.book-ceramics          { --cloth: #681c26; --cloth-dark: #4e131b; --cover-ink: #ead8ac; }
+.book-reading           { --cloth: #4a6854; --cloth-dark: #395343; --cover-ink: #dedcba; }
+:root { --leaf: #f8f2e4; }
+@view-transition { navigation: auto; }   /* where supported, the opened book glides into place */
+
+/* (only once the book is open: naming it earlier would flatten its 3-D tumble) */
+.spread, .opening.is-open .opening-book { view-transition-name: open-book; }
+.spread {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-width: 1180px;
+  padding: 12px 13px 15px;
+  border-radius: 7px;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, .18), 0 24px 44px -18px rgba(0, 0, 0, .45);
+}
+/* worn leather in the book's own colour: a neutral grain (images/leather.webp, tools/make_leather.py)
+   laid over the colour, edges and corners rubbed pale, the hinge darkened by handling */
+.spread, .ob-half, .ob-face {
+  background-color: var(--cloth);
+  background-image:
+    radial-gradient(circle at 0 0, rgba(255, 255, 255, .34), transparent 26px),
+    radial-gradient(circle at 100% 0, rgba(255, 255, 255, .30), transparent 30px),
+    radial-gradient(circle at 0 100%, rgba(255, 255, 255, .30), transparent 28px),
+    radial-gradient(circle at 100% 100%, rgba(255, 255, 255, .36), transparent 25px),
+    linear-gradient(to right, rgba(255, 255, 255, .20), transparent 9px, transparent calc(100% - 9px), rgba(255, 255, 255, .20)),
+    linear-gradient(to bottom, rgba(255, 255, 255, .18), transparent 8px, transparent calc(100% - 9px), rgba(255, 255, 255, .22)),
+    url("images/leather.webp");
+  background-size: auto, auto, auto, auto, auto, auto, 300px 300px;
+  background-blend-mode: soft-light, soft-light, soft-light, soft-light, soft-light, soft-light, soft-light;
+}
+.spread { position: relative; }
+.spread::before {            /* the hinge: a darker, creased band down the spine */
+  content: ""; position: absolute; left: calc(50% - 11px); width: 22px; top: 0; bottom: 0;
+  background: linear-gradient(to right, transparent, rgba(0, 0, 0, .30) 35%, rgba(0, 0, 0, .12) 50%, rgba(0, 0, 0, .30) 65%, transparent);
+  pointer-events: none;
+}
+.leaf { position: relative; }
+.leaf {
+  min-height: min(62vh, 660px);
+  padding: clamp(24px, 4.2vw, 60px);
+  background-color: var(--leaf);
+}
+.leaf > :first-child { margin-top: 0; }
+.leaf p { margin: 0 0 1.2em; }
+/* running copy: one block that fills the left page, then continues on the right */
+.spread { --leaf-pad: clamp(24px, 4.2vw, 60px); }
+.spread--flow .leaf { min-height: min(62vh, 660px); height: 100%; }
+.flow {
+  position: absolute; inset: 12px 13px 15px;
+  padding: var(--leaf-pad);
+  columns: 2; column-gap: calc(var(--leaf-pad) * 2); column-fill: auto;
+}
+.flow p { margin: 0 0 1.4em; }
+.flow p, .flow li { break-inside: avoid; }
+.notes { margin: 0 0 1.4em; padding-left: 1.3em; }
+.notes li { margin-bottom: .9em; }
+@media (max-width: 820px) {
+  .spread--flow .leaf--right { display: none; }
+  .spread--flow .leaf--left { position: absolute; inset: 11px; min-height: 0; height: auto; border-radius: 3px; background-image: none; }
+  .flow { position: relative; inset: auto; columns: 1; }
+}
+/* each page darkens into the gutter and shows the edges of the pages beneath it */
+.leaf--left {
+  border-radius: 3px 0 0 3px;
+  background-image: linear-gradient(to left, rgba(70, 48, 24, .14), rgba(70, 48, 24, .03) 3%, transparent 7%);
+  box-shadow: -2px 0 0 var(--edge-a), -3px 0 0 var(--edge-b), -5px 0 0 var(--edge-a), -6px 0 0 var(--edge-b), 0 2px 0 var(--edge-b);
+}
+.leaf--right {
+  border-radius: 0 3px 3px 0;
+  background-image: linear-gradient(to right, rgba(70, 48, 24, .14), rgba(70, 48, 24, .03) 3%, transparent 7%);
+  box-shadow: 2px 0 0 var(--edge-a), 3px 0 0 var(--edge-b), 5px 0 0 var(--edge-a), 6px 0 0 var(--edge-b), 0 2px 0 var(--edge-b);
+}
+@media (max-width: 820px) {
+  /* narrow screens: the pages follow one another down the screen */
+  .spread { grid-template-columns: 1fr; padding: 11px; }
+  .spread::before { display: none; }
+  .leaf { min-height: 0; }
+  .leaf--left  { border-radius: 3px 3px 0 0; box-shadow: none;
+                 background-image: linear-gradient(to top, rgba(70, 48, 24, .2), transparent 30px); }
+  .leaf--right { border-radius: 0 0 3px 3px; box-shadow: 0 2px 0 var(--edge-b);
+                 background-image: linear-gradient(to bottom, rgba(70, 48, 24, .2), transparent 30px); }
+}
+
+/* --- a book with more than two pages (.spread--turn, turn.js): click a page and it turns over --- */
+.spread--turn { perspective: 2400px; }
+.spread--turn .leaf[hidden] { display: none; }
+.spread--turn.can-turn .leaf { cursor: pointer; }
+/* a photo with a page to itself: as large as the page allows, like a plate in a book */
+.leaf--plate { display: flex; align-items: center; justify-content: center; padding: clamp(14px, 2.6vw, 38px); }
+.leaf--plate img { display: block; width: 100%; height: auto; max-height: 100%; object-fit: contain; border-radius: 2px;
+                   box-shadow: 0 0 0 1px rgba(70, 48, 24, .10); }
+/* a tall picture (a painting): it fills the page's width unless that would make the book taller than the window */
+.leaf--portrait img { width: auto; max-width: 100%; max-height: min(68vh, 780px); }
+/* ... and its caption (figure.plate > figcaption): small, under the picture and as wide as it. It hangs
+   in the page's bottom margin, which is made deeper on both pages so that the two pictures stay level. */
+.leaf--portrait { padding-bottom: clamp(58px, 6vw, 78px); }
+.plate { position: relative; margin: 0; max-width: 100%; }
+.plate figcaption {
+  position: absolute; top: 100%; left: 0; right: 0; margin-top: 9px;
+  font-size: 11px; line-height: 1.4; color: var(--muted);
+}
+@media (max-width: 820px) {
+  .leaf--portrait { padding-bottom: clamp(14px, 2.6vw, 38px); }
+  .leaf--portrait img { width: 100%; max-height: none; }
+  .plate figcaption { position: static; }
+}
+/* the page in mid-turn: a sheet hinged on the spine, this page on its front and the next on its back */
+.turning { position: absolute; z-index: 2; transform-style: preserve-3d; pointer-events: none; }
+.turning--fwd  { transform-origin: 0 50%;    animation: turn-fwd  .9s cubic-bezier(.45, .05, .25, 1) forwards; }
+.turning--back { transform-origin: 100% 50%; animation: turn-back .9s cubic-bezier(.45, .05, .25, 1) forwards; }
+.turning > .leaf { position: absolute; inset: 0; min-height: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.turning > .leaf + .leaf { transform: rotateY(180deg); }
+.turning > .leaf::after {           /* the lifted page falls into shadow as it stands on edge */
+  content: ""; position: absolute; inset: 0; background: #2b1d16; opacity: 0; pointer-events: none;
+  animation: turn-shade .9s ease-in-out;
+}
+@keyframes turn-fwd  { from { transform: rotateY(0); } to { transform: rotateY(-180deg); } }
+@keyframes turn-back { from { transform: rotateY(0); } to { transform: rotateY(180deg); } }
+@keyframes turn-shade { 0%, 100% { opacity: 0; } 50% { opacity: .2; } }
+.turn-hint { max-width: 1180px; margin: 18px 0 0; text-align: center; color: var(--muted); font-size: 13px; }
+.turn-count { margin-left: 0; }
+@media (max-width: 820px) {
+  /* narrow screens: no turning - every page is laid out, one under the other */
+  .spread--turn .leaf[hidden] { display: flex; }
+  .spread--turn .leaf { cursor: auto; border-radius: 0; box-shadow: none; }
+  .turn-hint { display: none; }
+}
+
+/* --- home: a book is pulled from the pile, what was on it drops, and it opens --- */
+.book.is-pulled { transition: transform .4s cubic-bezier(.5, 0, .2, 1), opacity .3s ease .1s; }
+.is-dropping { transition: transform .24s cubic-bezier(.5, 0, .9, .5); }
+.opening {
+  position: fixed; inset: 0; z-index: 50;
+  display: grid; place-items: center;
+  background: rgba(var(--veil), 0);
+  transition: background-color .7s ease .1s;
+  perspective: 2400px;
+}
+.opening.is-in { background: rgba(var(--veil), .9); }
+.opening.is-returning, .opening.is-returning * { transition: none !important; }   /* arriving back from a book page: already there, no fade-in */
+.opening-book {
+  position: relative;
+  width: min(86vw, 1180px);
+  height: min(68vh, 53vw, 700px);
+  transform: translateX(-25%);                 /* closed: the cover sits mid-page */
+  transition: transform .8s cubic-bezier(.45, .05, .25, 1);      /* the flight from the pile */
+  transform-style: preserve-3d;
+}
+.opening.is-open .opening-book { transform: none; transition: transform .6s ease-in-out; }
+.ob-spine {                       /* the book's spine side, at right angles to its cover */
+  position: absolute; top: 0; right: 50%; height: 100%;
+  transform-origin: 100% 50%;
+  transform: rotateY(-90deg);
+}
+.ob-spine img { position: absolute; left: 50%; top: 50%; max-width: none; transform: translate(-50%, -50%) rotate(90deg); }
+/* cover and pages fade in just as the book leaves the pile (edge-on, they would show as a sliver) */
+.opening .ob-half, .opening .ob-cover { opacity: 0; transition: opacity .2s ease .05s; }
+.opening.is-in .ob-half, .opening.is-in .ob-cover { opacity: 1; }
+.ob-half, .ob-cover { position: absolute; top: 0; left: 50%; width: 50%; height: 100%; }
+.ob-half, .ob-face {
+  box-shadow: 0 24px 44px -18px rgba(0, 0, 0, .45);
+}
+.ob-right { padding: 12px 13px 15px 0; border-radius: 0 7px 7px 0; }
+.ob-paper { width: 100%; height: 100%; background-color: var(--leaf); }
+.ob-right .ob-paper { background-image: linear-gradient(to right, rgba(70, 48, 24, .14), rgba(70, 48, 24, .03) 3%, transparent 7%); border-radius: 0 3px 3px 0; }
+.ob-cover {
+  transform-origin: 0 50%;
+  transform-style: preserve-3d;
+  transition: transform .6s ease-in-out;
+}
+.opening.is-open .ob-cover { transform: rotateY(-180deg); }
+.ob-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.ob-front {
+  display: grid; place-items: center;
+  border-radius: 2px 7px 7px 2px;
+  color: var(--cover-ink);
+}
+.ob-front span {
+  padding: .5em .8em;
+  border: 2px solid currentColor;
+  outline: 1px solid currentColor; outline-offset: 5px;
+  font-family: var(--title);
+  max-width: 78%;
+  font-size: clamp(20px, 3.4vw, 50px);
+  line-height: 1.1;
+  text-align: center;                         /* long titles break onto two lines */
+}
+.ob-back { transform: rotateY(180deg); padding: 12px 0 15px 13px; border-radius: 7px 0 0 7px; }
+.ob-back .ob-paper { background-image: linear-gradient(to left, rgba(70, 48, 24, .14), rgba(70, 48, 24, .03) 3%, transparent 7%); border-radius: 3px 0 0 3px; }
+
+/* closing the book again ("<< back", close.js): a stand-in laid over the open book */
+.closing { position: fixed; inset: 0; z-index: 50; }
+.closing-book {
+  position: absolute;
+  transform: none;
+  transition: transform .6s ease-in-out;          /* same speed as the opening */
+  perspective: 2400px;                            /* the page is flat and the cover is simply drawn over it, in that order */
+}
+.cb-half, .cb-cover { position: absolute; top: 0; left: 50%; width: 50%; height: 100%; }
+.cb-half, .cb-inside { overflow: hidden; box-shadow: 0 24px 44px -18px rgba(0, 0, 0, .45); }
+.cb-half { border-radius: 0 7px 7px 0; }
+.cb-cover {
+  transform-origin: 0 50%;
+  transform-style: preserve-3d;
+  transform: rotateY(-180deg);                    /* open: the cover lies flat on the left */
+  transition: transform .6s ease-in-out;
+}
+.cb-inside {
+  position: absolute; inset: 0;
+  transform: rotateY(180deg);
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  border-radius: 7px 0 0 7px;
+}
+
+/* ---------- simple grids / lists for later content ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 32px;
+}
+.grid img { display: block; width: 100%; height: auto; }
+
+.entries { list-style: none; margin: 0; padding: 0; max-width: 760px; }
+.entries li {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 0;
+}
+.entries .meta { color: var(--muted); white-space: nowrap; }
+/* a list of cited pieces (future-theories.html): a bulleted list, each item a line of running text -
+   author, "title", year - which may wrap (the wrapped lines stay clear of the bullet) */
+.entries--cited { list-style: disc; padding-left: 1.4em; }
+.entries--cited li { display: list-item; margin-bottom: .75em; }
+
+
+/* ---------- the light / dark switch (added to every page by theme.js) ----------
+   A small pill tucked into the upper right-hand corner of the window. Its knob is an icon:
+   a sun on the left for light, a moon on the right for dark. */
+.theme-switch {
+  position: absolute; z-index: 5;
+  top: 14px; right: 14px;
+  box-sizing: border-box; width: 34px; height: 18px;
+  margin: 0; padding: 0;
+  border: 1px solid var(--bar); border-radius: 999px;
+  background: none;
+  color: var(--bar);
+  cursor: pointer;
+  opacity: .6;
+  transition: opacity .2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.theme-switch:hover, .theme-switch:focus-visible { opacity: 1; }
+.theme-switch:focus-visible { outline: 1px solid var(--bar); outline-offset: 3px; }
+.theme-knob {
+  position: absolute; left: 2px; top: 2px; width: 12px; height: 12px;
+  transition: transform .2s ease;
+}
+.theme-switch[aria-checked="true"] .theme-knob { transform: translateX(16px); }
+.theme-knob svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.theme-knob .theme-moon, .theme-switch[aria-checked="true"] .theme-sun { display: none; }
+.theme-switch[aria-checked="true"] .theme-moon { display: block; }
+.theme-switch::after { content: ""; position: absolute; inset: -12px; }   /* a larger area to press */
+/* its tooltip (.theme-tip, a speech bubble under the switch with its point towards it) names the mode
+   a click would switch to: "dark mode" while light, "light mode" while dark. It is see-through, so
+   that it sits softly on the wall. */
+.theme-tip {
+  --tip: color-mix(in srgb, var(--bar) 42%, transparent);      /* how solid the bubble is in light mode ... */
+  position: absolute; top: calc(100% + 11px); right: -4px;
+  padding: 4px 9px 5px;
+  border-radius: 8px;
+  background: var(--tip); color: var(--bar-ink);
+  font-family: var(--body); font-size: 11px; line-height: 1.3; letter-spacing: 0; white-space: nowrap;
+  opacity: 0; visibility: hidden;
+  transition: opacity .15s ease, visibility .15s;
+  pointer-events: none;
+}
+[data-theme="dark"] .theme-tip { --tip: color-mix(in srgb, var(--bar) 30%, transparent); }   /* ... and in dark mode */
+.theme-tip::before {              /* the point of the bubble, under the middle of the switch */
+  content: ""; position: absolute; bottom: 100%; right: 15px;
+  border: 6px solid transparent; border-top-width: 0; border-bottom-color: var(--tip);
+}
+.theme-tip::after { content: "dark mode"; }
+.theme-switch[aria-checked="true"] .theme-tip::after { content: "light mode"; }
+.theme-switch:focus-visible .theme-tip { opacity: 1; visibility: visible; }
+@media (hover: hover) { .theme-switch:hover .theme-tip { opacity: 1; visibility: visible; } }   /* (not on touch screens, where it would stay up after a tap) */
+@media (prefers-reduced-motion: reduce) { .theme-knob, a, .theme-tip { transition: none; } }
+
+/* ---------- dark mode (data-theme="dark" on <html>, set by theme.js) ----------
+   The room at night: the brick wall in darkness, the things on the desk dimmed, the lit lava lamp
+   glowing. The open books have dark pages and pale ink. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --ink: #e4ddd0;
+  --muted: #9c9183;
+  --oxblood: #d98a78;
+  --leaf: #25221f;
+  --bar: #e4ddd0;
+  --bar-ink: #18171b;
+  --edge-a: #38332d;
+  --edge-b: #141210;
+  --veil: 20, 19, 24;
+  --dim: brightness(.62);          /* how far the pictures on the home page are dimmed */
+}
+html[data-theme="dark"] {
+  background-color: #18171b;
+  background-image: linear-gradient(rgba(17, 16, 22, .84), rgba(17, 16, 22, .84)), url("images/wall-brick.webp");
+}
+/* the books' cloth and stamped ink, dimmed to match their pictures on the pile */
+[data-theme="dark"] .book-past-work         { --cloth: #321b12; --cloth-dark: #24120c; --cover-ink: #c09d3e; }
+[data-theme="dark"] .book-present-interests { --cloth: #5e6f83; --cloth-dark: #495b71; --cover-ink: #0a1332; }
+[data-theme="dark"] .book-future-theories   { --cloth: #94712c; --cloth-dark: #7e5c21; --cover-ink: #2a1e10; }
+[data-theme="dark"] .book-ceramics          { --cloth: #47131a; --cloth-dark: #350d12; --cover-ink: #bbad8a; }
+[data-theme="dark"] .book-reading           { --cloth: #324739; --cloth-dark: #27382e; --cover-ink: #b2b095; }
+[data-theme="dark"] .leaf--plate img { filter: brightness(.78); }
+
+/* home: everything on and above the desk is dimmed ... */
+[data-theme="dark"] .desk,
+[data-theme="dark"] .shelf,
+[data-theme="dark"] .mug-photo,
+[data-theme="dark"] .book img,
+[data-theme="dark"] .ob-spine img,
+[data-theme="dark"] .postcard img,
+[data-theme="dark"] img.postcard,
+[data-theme="dark"] button.postcard.is-barking img { filter: var(--dim); }
+[data-theme="dark"] .book:hover img, [data-theme="dark"] .book:focus-visible img { filter: brightness(1) saturate(1.1); }   /* (lit to its full daylight colour) */
+[data-theme="dark"] .card-flip:hover img, [data-theme="dark"] .card-flip:focus-visible img,
+[data-theme="dark"] button.postcard:hover img, [data-theme="dark"] button.postcard:focus-visible img,
+[data-theme="dark"] img.postcard:hover { filter: brightness(.85); }
+[data-theme="dark"] .wave i { background: #19e54a; box-shadow: 0 0 .5cqw rgba(25, 229, 74, .55); }
+[data-theme="dark"] .wisp { filter: brightness(0) invert(1) opacity(.55); }
+/* ... except the lava lamp: while it is lit it throws a soft lavender light on the wall, the desk and the cat */
+.lamp::before {                    /* (drawn as a shadow, so that it never makes the page wider and scroll sideways) */
+  content: ""; position: absolute; z-index: -1; pointer-events: none;
+  left: 50%; top: 38%; width: 2cqw; height: 2cqw; margin: -1cqw 0 0 -1cqw; border-radius: 50%;
+  background: rgba(188, 160, 255, .3);
+  box-shadow: 0 0 9cqw 6cqw rgba(188, 160, 255, .2), 0 0 22cqw 14cqw rgba(188, 160, 255, .13);
+  opacity: 0; transition: opacity .9s ease;
+}
+[data-theme="dark"] .lamp:not(.is-off)::before { opacity: 1; }
+[data-theme="dark"] .lamp img { filter: brightness(.9); transition: filter .9s ease; }
+[data-theme="dark"] .lamp.is-off img { filter: var(--dim); }

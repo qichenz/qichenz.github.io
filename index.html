@@ -1,43 +1,293 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-
-  <!-- Basic Page Needs
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <meta charset="utf-8">
-  <title>hi</title>
-  <meta name="description" content="">
-  <meta name="author" content="">
-
-  <!-- Mobile Specific Metas
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- FONT
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <link href="//fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
-
-  <!-- CSS
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/skeleton.css">
-
-  <!-- Favicon
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <link rel="icon" type="image/png" href="images/favicon.png">
-
+  <title>qichenzhang.net</title>
+  <!-- tab icon: a plain circle in the lavender of the lit lava lamp -->
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="images/favicon-180.png">
+  <!-- light / dark mode and its switch; loaded first so the page is never drawn in the wrong colours -->
+  <script src="theme.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="stack.css">
+  <script src="home.js" defer></script>
+  <script src="bark.js" defer></script>
 </head>
-<body>
+<body class="home-page">
+  <main class="home">
 
-  <!-- Primary Page Layout
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <div class="container">
-    <div class="row">
-    <img src="images/welcome.gif">
-    </div>
-  </div>
+    <!-- the scene: a pile of books (each one a link) and a mug, on a desk -->
+    <nav class="stack" aria-label="pages">
+      <!-- postcards pinned to the wall above the desk: the name card hangs straight, the other two any old how.
+           The name card turns over when clicked. The dog on the left barks twice when clicked (bark.js).
+           Each is one picture (card, tilt, shadow and thumbtack) made by tools/make_postcards.py -->
+      <div class="postcards">
+        <button class="postcard postcard--left" type="button" data-bark="images/postcard-pyrenees-bark.webp" aria-label="Suds the Great Pyrenees: press to hear him bark"><img src="images/postcard-pyrenees.webp" alt=""></button>
+        <!-- the name card turns over when clicked (home.js): on its back, how to get in touch -->
+        <h1 class="postcard postcard--name"><button class="card-flip" type="button">
+          <span class="card-turn">
+            <img class="card-front" src="images/postcard-name.webp" alt="Qichen Zhang">
+            <span class="card-back">
+              <img src="images/postcard-name-back.webp" alt="">
+              <span class="card-note"><span>Get in touch at</span> <span>&#9993;&#xFE0E; <b>q</b> (at) <b>quaint</b></span> <span>(dot) <b>systems</b> :)</span></span>
+            </span>
+          </span>
+        </button></h1>
+        <img class="postcard postcard--right" src="images/postcard-guilin.webp" alt="">
+      </div>
+      <div class="books">
+        <img class="desk" src="images/desk.webp" alt="">
 
-<!-- End Document
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+        <!-- lava lamp: a photo with the wax redrawn in SVG so it can move -->
+        <!-- a tiny wooden shelf on the wall above the cat, with a Sony boombox on it. The shelf is a
+             picture made from the desk's wood; the boombox is a cut-out photograph. Placed by .shelf in style.css. -->
+        <svg class="shelf" viewBox="0 0 300 219" xmlns="http://www.w3.org/2000/svg" role="group" aria-label="A Sony boombox on a small wooden shelf">
+          <defs>
+            <filter id="shelf-shadow" x="-20%" y="-40%" width="140%" height="200%"><feGaussianBlur stdDeviation="5"/></filter>
+            <filter id="shelf-contact" x="-20%" y="-200%" width="140%" height="500%"><feGaussianBlur stdDeviation="2.2"/></filter>
+            <!-- for the boombox's moving parts (all in pixels of images/boombox.webp, 900 x 426):
+                 the play key's place in the row of keys, the cassette window, and the middle of each reel -->
+            <mask id="bb-key-hole" maskUnits="userSpaceOnUse" x="0" y="0" width="900" height="426">
+              <rect width="900" height="426" fill="#fff"/><rect x="496.8" y="116" width="31.4" height="26.6" fill="#000"/>
+            </mask>
+            <clipPath id="bb-key-slot"><rect x="496.4" y="115" width="32.2" height="28"/></clipPath>
+            <clipPath id="bb-window"><rect x="375" y="269" width="175" height="61.3"/></clipPath>
+            <clipPath id="bb-hub-l"><circle r="10"/></clipPath>
+            <clipPath id="bb-hub-r"><circle r="11"/></clipPath>
+          </defs>
+          <!-- the shelf itself is a picture cut from the desk's own wood, with its shadow on the wall
+               (images/shelf.webp, tools/make_shelf.py - which prints these numbers) -->
+          <image href="images/shelf.webp" x="0" y="117" width="300.6" height="101.8"/>
+          <!-- the boombox's shadows: on the wall behind it, and on the board it stands on (light from the upper left) -->
+          <rect x="33" y="82" width="250" height="64" rx="8" fill="#2a1a10" opacity=".30" filter="url(#shelf-shadow)"/>
+          <rect x="34" y="37" width="244" height="9" rx="3" fill="#2a1a10" opacity=".16" filter="url(#shelf-contact)"/>
+          <ellipse cx="154" cy="152.500" rx="124" ry="4" fill="#2a1a10" opacity=".5" filter="url(#shelf-contact)"/>
+          <!-- the boombox: a photograph of a Sony CFS-210L, cut out (images/boombox.webp, tools/make_boombox.py;
+               photo by Omer Haktan Bulut on Unsplash). It is as wide as the shelf. -->
+          <!-- Click it and it plays (home.js): the play key - second from the right - stays down and the
+               cassette's reels turn until it is clicked again. Everything inside this group is measured in
+               pixels of the photograph. The key and the reels are the photograph's own, shown a second time:
+               the key through a slot it can sink in, each reel through a round hole it can turn in. -->
+          <g transform="translate(25 32.7) scale(.277778 .2777)">
+            <image href="images/boombox.webp" width="900" height="426" mask="url(#bb-key-hole)"/>
+            <g clip-path="url(#bb-key-slot)">
+              <g class="bb-key">
+                <image href="images/boombox.webp" width="900" height="426"/>
+                <rect class="bb-key-shade" x="496" y="118" width="33" height="26" fill="#000"/>
+              </g>
+            </g>
+            <g clip-path="url(#bb-window)">
+              <g transform="translate(416 322)"><g class="bb-reel">
+                <image href="images/boombox.webp" x="-416" y="-322" width="900" height="426" clip-path="url(#bb-hub-l)"/>
+                <path class="bb-teeth" d="M0 -5.6V-9M4.85 2.8L7.8 4.5M-4.85 2.8L-7.8 4.5"/>
+              </g></g>
+              <g transform="translate(508 322)"><g class="bb-reel bb-reel-r">
+                <image href="images/boombox.webp" x="-508" y="-322" width="900" height="426" clip-path="url(#bb-hub-r)"/>
+                <path class="bb-teeth" d="M0 -5.6V-9.6M4.85 2.8L8.3 4.8M-4.85 2.8L-8.3 4.8"/>
+              </g></g>
+            </g>
+            <rect class="bb-hit" x="0" y="118" width="900" height="308" rx="22" fill="transparent" role="button" tabindex="0" aria-pressed="false" aria-label="Boombox: play or stop the music"/>
+          </g>
+        </svg>
+        <!-- while the boombox plays, a small green waveform dances above its handle, as wide as the handle;
+             it fades in and out with the music (its bars are made by home.js, placed by .wave in style.css) -->
+        <div class="wave" aria-hidden="true"></div>
+
+        <!-- a tuxedo cat asleep on the desk in a loaf, between the books and the lamp (after the photos in tux-inspo/): black, with a
+             white muzzle, chin and bib, white mittens and long white whiskers; small ears set wide apart. Its tail hangs over the
+             edge of the desk and swings. Painted softly, with furry edges (the cat-fur filter), lit from the upper left like the room. -->
+        <svg class="cat" viewBox="0 0 460 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A tuxedo cat napping on the desk in a loaf">
+          <defs>
+            <filter id="cat-shadow" x="-20%" y="-200%" width="140%" height="500%"><feGaussianBlur stdDeviation="6"/></filter>
+            <!-- fur: the edge of a shape is broken up into fine hairs (pushed in and out by a fine noise), then softened a little -->
+            <filter id="cat-fur" filterUnits="userSpaceOnUse" x="20" y="60" width="380" height="200">
+              <feTurbulence type="fractalNoise" baseFrequency=".3" numOctaves="2" seed="4" result="hairs"/>
+              <feDisplacementMap in="SourceGraphic" in2="hairs" scale="5" xChannelSelector="R" yChannelSelector="G"/>
+              <feGaussianBlur stdDeviation=".5"/>
+            </filter>
+            <filter id="cat-fur-tail" filterUnits="userSpaceOnUse" x="-50" y="-40" width="120" height="160">      <!-- (the same, for the swinging parts of the tail) -->
+              <feTurbulence type="fractalNoise" baseFrequency=".3" numOctaves="2" seed="9" result="hairs"/>
+              <feDisplacementMap in="SourceGraphic" in2="hairs" scale="5" xChannelSelector="R" yChannelSelector="G"/>
+              <feGaussianBlur stdDeviation=".5"/>
+            </filter>
+            <filter id="cat-coat" filterUnits="userSpaceOnUse" x="30" y="50" width="340" height="190">               <!-- the coat: a faint mottling -->
+              <feTurbulence type="fractalNoise" baseFrequency=".09 .26" numOctaves="3" seed="7"/>
+              <feColorMatrix type="matrix" values="0 0 0 0 .58  0 0 0 0 .59  0 0 0 0 .74  2.4 0 0 0 -1.05"/>
+            </filter>
+            <filter id="cat-soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation=".7"/></filter>
+            <filter id="cat-shade" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="7"/></filter>                <!-- broad light and shade -->
+            <filter id="cat-shade-fine" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="2.2"/></filter>
+            <radialGradient id="cat-body-fur" gradientUnits="userSpaceOnUse" cx="215" cy="112" r="160">
+              <stop offset="0" stop-color="#2e2e3a"/><stop offset=".5" stop-color="#1b1b21"/><stop offset="1" stop-color="#101014"/>
+            </radialGradient>
+            <radialGradient id="cat-head-fur" gradientUnits="userSpaceOnUse" cx="100" cy="140" r="80">
+              <stop offset="0" stop-color="#2c2c38"/><stop offset=".6" stop-color="#1b1b21"/><stop offset="1" stop-color="#121216"/>
+            </radialGradient>
+            <linearGradient id="cat-white" gradientUnits="userSpaceOnUse" x1="0" y1="160" x2="0" y2="234">
+              <stop offset="0" stop-color="#fbf9f5"/><stop offset=".7" stop-color="#f1ede6"/><stop offset="1" stop-color="#d3ccc1"/>
+            </linearGradient>
+            <clipPath id="cat-body-clip"><path d="M100 232 C 84 214, 90 178, 120 150 C 150 120, 200 101, 250 100 C 305 99, 350 128, 360 172 C 365 200, 356 224, 338 232 Z"/></clipPath>
+            <clipPath id="cat-head-clip"><path d="M63 168 C 61 141, 84 124, 112 124 C 140 124, 163 141, 161 168 C 160 188, 143 204, 125 208 C 116 210, 108 210, 99 208 C 81 204, 64 188, 63 168 Z"/></clipPath>
+          </defs>
+          <ellipse cx="228" cy="233" rx="150" ry="8" fill="#2a1a10" opacity=".34" filter="url(#cat-shadow)"/>
+          <!-- tail: over the front edge of the desk, hanging down and swinging like a pendulum (two joints, the end trailing) -->
+          <g class="cat-tail" fill="none" stroke-linecap="round">
+            <path d="M330 216 C 352 224, 366 230, 371 244" stroke="#0e0f15" stroke-width="23" filter="url(#cat-fur)"/>
+            <!-- (.cat-tail-swish: an extra, quicker swish laid over the slow swing while the cat is being petted - home.js) -->
+            <g transform="translate(371 244)"><g class="cat-tail-swish">
+              <g class="cat-tail-a">
+                <!-- ink outlines first, then the fills, so no outline shows across the joint -->
+                <path d="M0 0 C 3 26, -2 48, 2 70" stroke="#0e0f15" stroke-width="23" filter="url(#cat-fur-tail)"/>
+                <g transform="translate(2 70)"><g class="cat-tail-b"><path d="M0 0 C 2 14, 6 26, 13 33" stroke="#0e0f15" stroke-width="22" filter="url(#cat-fur-tail)"/></g></g>
+                <path d="M0 0 C 3 26, -2 48, 2 70" stroke="#1d1e28" stroke-width="20" filter="url(#cat-fur-tail)"/>
+                <g transform="translate(2 70)"><g class="cat-tail-b"><path d="M0 0 C 2 14, 6 26, 13 33" stroke="#1d1e28" stroke-width="19" filter="url(#cat-fur-tail)"/>
+                  <path d="M-4 0 C -2 12, 1 22, 6 29" stroke="#4a4c66" stroke-width="6" opacity=".28" filter="url(#cat-shade-fine)"/></g></g>
+                <path d="M-4.5 2 C -1.5 26, -6.5 48, -2.5 68" stroke="#4a4c66" stroke-width="6" opacity=".28" filter="url(#cat-shade-fine)"/>   <!-- (the light down its left side) -->
+              </g>
+            </g></g>
+            <path d="M330 216 C 352 224, 366 230, 371 244" stroke="#1d1e28" stroke-width="20" filter="url(#cat-fur)"/>
+            <path d="M334 211 C 352 218, 362 224, 367 236" stroke="#4a4c66" stroke-width="6" opacity=".28" filter="url(#cat-shade-fine)"/>
+          </g>
+          <!-- body: a loaf - a long low mound, the shoulders just behind the head, the paws tucked under; rises and falls as it breathes -->
+          <g class="cat-body">
+            <g filter="url(#cat-fur)">
+              <path d="M100 232 C 84 214, 90 178, 120 150 C 150 120, 200 101, 250 100 C 305 99, 350 128, 360 172 C 365 200, 356 224, 338 232 Z" fill="url(#cat-body-fur)" stroke="#101014" stroke-opacity=".5" stroke-width="2" stroke-linejoin="round"/>
+              <g clip-path="url(#cat-body-clip)">
+                <rect x="30" y="50" width="340" height="190" filter="url(#cat-coat)" opacity=".08"/>
+                <!-- light on the shoulders and along the back; the head's shadow; the haunch; the dark where the cat meets the desk -->
+                <path d="M150 128 C 200 104, 290 100, 338 142" fill="none" stroke="#6a6a82" stroke-width="12" stroke-linecap="round" opacity=".3" filter="url(#cat-shade)"/>
+                <ellipse cx="150" cy="186" rx="50" ry="46" fill="#060608" opacity=".5" filter="url(#cat-shade)"/>
+                <path d="M300 236 C 286 204, 300 170, 338 160 C 356 176, 364 204, 350 236 Z" fill="#30303e" opacity=".5" filter="url(#cat-shade)"/>
+                <ellipse cx="240" cy="239" rx="130" ry="11" fill="#050507" opacity=".5" filter="url(#cat-shade)"/>
+              </g>
+              <!-- the bib: white from under the chin down the chest -->
+              <path d="M84 198 C 86 214, 92 226, 100 233 L 154 233 C 157 222, 153 208, 145 196 C 128 210, 102 210, 84 198 Z" fill="url(#cat-white)"/>
+              <ellipse cx="114" cy="207" rx="30" ry="6" fill="#6f675f" opacity=".45" filter="url(#cat-shade-fine)"/>
+              <ellipse cx="122" cy="221" rx="30" ry="3" fill="#6f675f" opacity=".3" filter="url(#cat-shade-fine)"/>
+            </g>
+            <!-- the fold of the hind leg: a soft crease -->
+            <path d="M298 231 C 284 202, 298 170, 334 160" fill="none" stroke="#08080b" stroke-width="2.4" stroke-linecap="round" opacity=".5" filter="url(#cat-soft)"/>
+          </g>
+          <!-- head: bowed a little in sleep; broad, with small ears set wide apart -->
+          <g class="cat-head"><g transform="rotate(-4 112 172) translate(112 208) scale(1.1) translate(-112 -208)">
+            <g filter="url(#cat-fur)">
+              <path d="M67 152 C 61 134, 61 117, 65 101 C 80 107, 93 117, 101 129 Z" fill="#1a1a20" stroke="#101014" stroke-opacity=".5" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M123 129 C 133 117, 146 107, 161 101 C 165 117, 165 134, 159 152 Z" fill="#1a1a20" stroke="#101014" stroke-opacity=".5" stroke-width="2" stroke-linejoin="round"/>
+              <!-- inside the ears: dusky, a little pink, with a few pale hairs -->
+              <path d="M72 144 C 68 131, 68 120, 70 110 C 79 115, 87 122, 92 130 Z" fill="#5b4852"/>
+              <path d="M132 130 C 139 122, 147 115, 156 110 C 158 120, 158 131, 154 144 Z" fill="#5b4852"/>
+              <path d="M63 168 C 61 141, 84 124, 112 124 C 140 124, 163 141, 161 168 C 160 188, 143 204, 125 208 C 116 210, 108 210, 99 208 C 81 204, 64 188, 63 168 Z" fill="url(#cat-head-fur)" stroke="#101014" stroke-opacity=".5" stroke-width="2"/>
+              <g clip-path="url(#cat-head-clip)">
+                <rect x="30" y="50" width="340" height="190" filter="url(#cat-coat)" opacity=".06"/>
+                <ellipse cx="102" cy="138" rx="40" ry="11" fill="#6a6a86" opacity=".2" filter="url(#cat-shade)"/>
+                <ellipse cx="164" cy="184" rx="14" ry="30" fill="#050507" opacity=".3" filter="url(#cat-shade)"/>
+              </g>
+              <!-- the white muzzle: starts right below the nose and covers the whisker pads and chin (the nose itself sits on black) -->
+              <path d="M112 187.5 C 107 184.5, 95 183.5, 90 189 C 85 195, 91 204, 101 207.5 C 108 209.5, 116 209.5, 123 207.5 C 133 204, 139 195, 134 189 C 129 183.5, 117 184.5, 112 187.5 Z" fill="url(#cat-white)"/>
+            </g>
+            <path d="M75 133 L 73 119 M80 132 L 80 121 M149 133 L 151 119 M144 132 L 144 121" fill="none" stroke="#d8d2cc" stroke-width=".8" stroke-linecap="round" opacity=".55"/>
+            <!-- shade under the whisker pads and chin, so the muzzle has some form -->
+            <path d="M92 198 C 100 207, 124 207, 132 198" fill="none" stroke="#b9b0a6" stroke-width="3" stroke-linecap="round" opacity=".5" filter="url(#cat-shade-fine)"/>
+            <!-- closed eyes; a pink nose; the mouth -->
+            <path d="M79 167 Q 88 173, 98 168.5" fill="none" stroke="#050506" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M126 168.5 Q 136 173, 145 167" fill="none" stroke="#050506" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M79 165.5 Q 88 171, 98 167" fill="none" stroke="#4c4c5c" stroke-width=".9" stroke-linecap="round" opacity=".8"/>
+            <path d="M126 167 Q 136 171, 145 165.5" fill="none" stroke="#4c4c5c" stroke-width=".9" stroke-linecap="round" opacity=".8"/>
+            <path d="M106.5 181.5 Q 112 179.5, 117.5 181.5 Q 116 187, 112 188.5 Q 108 187, 106.5 181.5 Z" fill="#d49a9c" stroke="#b87f84" stroke-width=".8" stroke-linejoin="round"/>
+            <path d="M112 188.5 V 193 M112 193 Q 108 197.5, 103 195.5 M112 193 Q 116 197.5, 121 195.5" fill="none" stroke="#9c8f88" stroke-width="1" stroke-linecap="round"/>
+            <!-- whiskers: long, white and fine (and two above each eye) -->
+            <path d="M97 190.8 Q 70 182.8, 38 184.8 M96 194.8 Q 68 194.8, 40 202.8 M97 198.8 Q 74 204.8, 50 218.8" fill="none" stroke="#7d766e" stroke-width="1" stroke-linecap="round" opacity=".4"/>
+            <path d="M97 190 Q 70 182, 38 184 M96 194 Q 68 194, 40 202 M97 198 Q 74 204, 50 218" fill="none" stroke="#f4f1ec" stroke-width=".9" stroke-linecap="round"/>
+            <path d="M127 190 Q 154 182, 186 184 M128 194 Q 156 194, 184 202 M127 198 Q 150 204, 174 218" fill="none" stroke="#f4f1ec" stroke-width=".9" stroke-linecap="round"/>
+            <path d="M84 160 Q 78 150, 68 146 M88 159 Q 86 149, 80 143 M140 160 Q 146 150, 156 146 M136 159 Q 138 149, 144 143" fill="none" stroke="#e9e5df" stroke-width=".6" stroke-linecap="round" opacity=".3"/>
+          </g></g>
+          <!-- purr: two rows of small soft-grey marks around the cat, shown for a moment when it is clicked (home.js);
+               the outer row is a little shorter than the inner one, so the cat seems to hum -->
+          <g class="cat-purr" fill="none" stroke="#8e8c89" stroke-width="2" stroke-linecap="round">
+            <path d="M99.9 95.2 q 5.8 -5.0 12.2 -0.7"/>
+            <path d="M193.1 69.6 q 10.8 -6.5 22.3 -5.8"/>
+            <path d="M257.8 60.0 q 12.2 0.0 22.3 5.8"/>
+            <path d="M320.1 83.1 q 9.4 5.8 15.1 15.8"/>
+            <path d="M374.1 135.6 q 5.8 8.6 6.5 19.4"/>
+            <path d="M108 104 q 8 -7 17 -1"/>
+            <path d="M192 84 q 15 -9 31 -8"/>
+            <path d="M250 72 q 17 0 31 8"/>
+            <path d="M308 90 q 13 8 21 22"/>
+            <path d="M360 136 q 8 12 9 27"/>
+          </g>
+          <!-- white mittens: the tips of the front paws, tucked under the chest -->
+          <ellipse cx="108" cy="226.5" rx="14" ry="7.5" fill="url(#cat-white)" stroke="#8d857c" stroke-opacity=".55" stroke-width="1.2" filter="url(#cat-fur)"/>
+          <ellipse cx="136" cy="226.5" rx="14" ry="7.5" fill="url(#cat-white)" stroke="#8d857c" stroke-opacity=".55" stroke-width="1.2" filter="url(#cat-fur)"/>
+          <path d="M103 228 v4 M110 228.5 v4 M134 228.5 v4 M141 228 v4" fill="none" stroke="#a9a198" stroke-width="1.1" stroke-linecap="round"/>
+        </svg>
+        <button class="lamp" type="button" aria-pressed="true" aria-label="Lava lamp: switch off or on">
+          <img src="images/lamp.webp" alt="">
+          <svg viewBox="0 0 570 1830" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="lamp-wax" gradientUnits="userSpaceOnUse" x1="0" x2="0" y1="280" y2="1010">
+                <stop offset="0" stop-color="#d9c2f7"/><stop offset=".6" stop-color="#efe0ff"/><stop offset="1" stop-color="#fffaff"/>
+              </linearGradient>
+              <clipPath id="lamp-glass"><path d="M176 288 L166 380 L151 480 L135 580 L119 680 L103 780 L86 880 L75 950 L77 980 L81 1000 L472 1000 L476 980 L477 950 L466 880 L448 780 L431 680 L413 580 L395 480 L378 380 L361 288 Z"/></clipPath>
+              <!-- blobs merge and pinch apart like wax, with a soft glowing edge -->
+              <filter id="lamp-goo" x="-40%" y="-10%" width="180%" height="120%" color-interpolation-filters="sRGB">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="18"/>
+                <feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -9" result="goo"/>
+                <feGaussianBlur in="goo" stdDeviation="2.2" result="wax"/>
+                <feGaussianBlur in="goo" stdDeviation="26"/>
+                <feComponentTransfer result="glow"><feFuncA type="linear" slope=".55"/></feComponentTransfer>
+                <feMerge><feMergeNode in="glow"/><feMergeNode in="wax"/></feMerge>
+              </filter>
+              <filter id="lamp-soft" x="-50%" y="-10%" width="200%" height="120%"><feGaussianBlur stdDeviation="7"/></filter>
+            </defs>
+            <g clip-path="url(#lamp-glass)">
+              <g filter="url(#lamp-goo)" fill="url(#lamp-wax)">
+                <ellipse class="lava-pool" cx="281" cy="1012" rx="176" ry="62"/>
+                <ellipse class="lava-cap" cx="276" cy="286" rx="92" ry="50"/>
+                <circle class="lava lava-1" cx="250" cy="960" r="74" style="--rise: 560px; --drift: 22px"/>
+                <circle class="lava lava-2" cx="340" cy="975" r="56" style="--rise: 600px; --drift: -58px"/>
+                <circle class="lava lava-3" cx="200" cy="985" r="42" style="--rise: 530px; --drift: 66px"/>
+                <circle class="lava lava-4" cx="300" cy="990" r="62" style="--rise: 640px; --drift: -26px"/>
+                <circle class="lava lava-5" cx="270" cy="990" r="28" style="--rise: 650px; --drift: 8px"/>
+              </g>
+              <!-- switched off: the bulb goes out, so liquid and wax go dark -->
+              <rect class="lamp-dark" x="60" y="280" width="450" height="730" fill="#57487c"/>
+              <!-- reflections on the glass, in front of the wax -->
+              <path d="M150 420 L176 420 L128 900 L92 900 Z" fill="#fff" opacity=".2" filter="url(#lamp-soft)"/>
+              <path d="M384 520 L394 520 L452 930 L438 930 Z" fill="#fff" opacity=".13" filter="url(#lamp-soft)"/>
+            </g>
+          </svg>
+        </button>
+
+        <div class="mug" aria-hidden="true">
+          <div class="steam">
+            <img class="wisp wisp-1" src="images/steam.webp" alt="">
+            <img class="wisp wisp-2" src="images/steam.webp" alt="">
+          </div>
+          <img class="mug-photo" src="images/mug.webp" alt="">
+        </div>
+
+        <a class="book book--1" href="past-work.html" data-book="past-work" data-open-book="Past Work">
+          <img src="images/book-past-work.webp" alt="past work">
+        </a>
+        <a class="book book--2" href="present-interests.html" data-book="present-interests" data-open-book="Present Interests">
+          <img src="images/book-present-interests.webp" alt="present interests">
+        </a>
+        <a class="book book--3" href="future-theories.html" data-book="future-theories" data-open-book="Future Theories">
+          <img src="images/book-future-theories.webp" alt="future theories">
+        </a>
+        <a class="book book--4" href="ceramics.html" data-book="ceramics" data-open-book="Ceramics">
+          <img src="images/book-ceramics.webp" alt="ceramics">
+        </a>
+        <a class="book book--5" href="reading.html" data-book="reading" data-open-book="What I&#39;m Reading">
+          <img src="images/book-reading.webp" alt="what i'm reading">
+        </a>
+      </div>
+    </nav>
+  </main>
+
+  <!-- footer: in the bottom right-hand corner of the page, in line with the light/dark switch above it (.site-footer in style.css) -->
+  <footer class="site-footer">&copy; 2026 Qichen Zhang.</footer>
 </body>
 </html>

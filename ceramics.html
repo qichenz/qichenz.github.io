@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>qichenzhang.net / ceramics</title>
+  <!-- tab icon: a plain circle in the lavender of the lit lava lamp -->
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="images/favicon-180.png">
+  <!-- light / dark mode and its switch; loaded first so the page is never drawn in the wrong colours -->
+  <script src="theme.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="book-page book-ceramics">
+  <header class="page-head">
+    <a class="back" href="index.html">&lt;&lt; back</a>
+  </header>
+
+  <main>
+    <!-- the open book. It has more pages than the two that show: clicking the right-hand page turns
+         it over to the next two, clicking the left-hand page turns back (turn.js). The pages are
+         listed in reading order - left, right, left, right ... - and each photo has a page to itself.
+         (Photos: web-sized copies of the pictures in ceramics/.) -->
+    <div class="spread spread--turn">
+      <section class="leaf leaf--left">
+        <p>I started making ceramics during the pandemic.</p>
+        <p>I'm still exploring and discovering my style, aesthetic, and personal balance between form and function.</p>
+        <p>Here are some pieces that I had fun making for friends, family, and myself.</p>
+        <p>Click to see what I've made :)</p>
+      </section>
+      <section class="leaf leaf--right leaf--plate">
+        <img src="images/ceramics-conical-jar.webp" width="1400" height="1400" alt="A small lidded jar with a pinched waist, glazed in blue and a crackled white.">
+      </section>
+      <section class="leaf leaf--left leaf--plate" hidden>
+        <img src="images/ceramics-ostrich.webp" width="1400" height="1400" alt="A shallow dish with a gold rim; a speckled ostrich's neck and head rise from its middle, holding rings.">
+      </section>
+      <section class="leaf leaf--right leaf--plate" hidden>
+        <img src="images/ceramics-wave-mug.webp" width="1400" height="1400" alt="A small rounded mug in pale blue-grey, with waves carved around its base.">
+      </section>
+    </div>
+    <p class="turn-hint" hidden><span class="turn-count"></span></p>
+    <script src="turn.js"></script>
+    <script src="close.js"></script>
+  </main>
+
+  <!-- footer: in the bottom right-hand corner of the page, in line with the light/dark switch above it (.site-footer in style.css) -->
+  <footer class="site-footer">&copy; 2026 Qichen Zhang.</footer>
+</body>
+</html>
