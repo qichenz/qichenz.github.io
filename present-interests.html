@@ -18,21 +18,57 @@
   </header>
 
   <main>
-    <!-- the open book: a painting on each page (web-sized copies of the two .jpg files in images/) -->
-    <div class="spread">
+    <!-- the open book: a picture on each page, with a note above it. It has more pages than the two
+         that show: clicking the right-hand page turns it over to the next two, clicking the left-hand
+         page turns back (turn.js). The pages are listed in reading order - left, right, left, right ...
+         (Pictures: web-sized copies of the .jpg files in images/.) -->
+    <div class="spread spread--turn spread--noted">
       <section class="leaf leaf--left leaf--plate leaf--portrait">
+        <!-- a note on the painting: it sits above the picture, across the page (.plate-note in style.css) -->
+        <p class="plate-note">Y'all are sleeping on <b>Otto Dix.</b> Dix flies under the radar, but I find much of his work visualizes the cultural and political tensions of the 21st century in a prescient and evergreen way.</p>
         <figure class="plate">
           <img src="images/plate-sylvia-von-harden.webp" width="1155" height="1600" alt="Otto Dix, Portrait of the Journalist Sylvia von Harden (1926): a woman with a monocle and bobbed hair, in a red checked dress, smokes at a café table against a pink wall.">
           <figcaption>Otto Dix, "Portrait of the journalist Sylvia von Harden," 1926, oil and tempera on wood, Musée National d'Art Moderne, Paris.</figcaption>
         </figure>
       </section>
       <section class="leaf leaf--right leaf--plate leaf--portrait">
+        <p class="plate-note">Although I was never drawn to Abstract Expressionism, I always loved <b>Kirchner's</b> pieces. His Berlin series is one that I continue to seek out.</p>
         <figure class="plate">
           <img src="images/plate-berlin-street-scene.webp" width="1182" height="1600" alt="Ernst Ludwig Kirchner, Berlin Street Scene (1913): two women in feathered hats, one in red and one in blue, among men in dark coats on a crowded street.">
           <figcaption>Ernst Ludwig Kirchner, "Berlin Street Scene," 1913, oil on canvas, Neue Galerie, New York.</figcaption>
         </figure>
       </section>
+      <!-- the next two pages: breakfast (web-sized copies of images/japanese_breakfast.jpg and images/breakfast1.jpg) -->
+      <section class="leaf leaf--left leaf--plate leaf--landscape" hidden>
+        <p class="plate-note"><b>Breakfast</b> is my favorite meal of the day. Ever since I've experienced a Japanese-style breakfast, I'm afraid the expectations have become too high.</p>
+        <p class="plate-note">I hack together various recipes, but here's <a href="https://www.instagram.com/p/DVq9oaAE9JS/" target="_blank">one of my favorite Instagram chefs</a> whose meals warm my heart.</p>
+        <figure class="plate">
+          <img src="images/plate-japanese-breakfast.webp" width="1600" height="1200" alt="A Japanese-style breakfast seen from above: grilled salmon, rolled omelette, a bowl of rice, greens in a blue bowl, pickles, a cup of tea and chopsticks on a white table.">
+        </figure>
+      </section>
+      <section class="leaf leaf--right leaf--plate leaf--landscape" hidden>
+        <p class="plate-note">That being said, I've enjoyed breakfast in every country I've visited. Every country's breakfast is fantastic.</p>
+        <p class="plate-note">I love eggs! Why are they so expensive? Please buy me eggs.</p>
+        <figure class="plate">
+          <img src="images/plate-breakfast1.webp" width="1600" height="1067" alt="Breakfast seen from above on a white cloth: a fried egg on toast with a runny yolk, a cup of black coffee and a carton of brown eggs.">
+        </figure>
+      </section>
+      <!-- the last two pages: film and television, as watercolours (painted-over copies of two posters) -->
+      <section class="leaf leaf--left leaf--plate leaf--portrait" hidden>
+        <p class="plate-note">Long live Wong Kar-wai. There's more to cinema than "In the Mood for Love," I promise. He's a real one.</p>
+        <figure class="plate">
+          <img src="images/fallen_angels_watercolor.webp" width="1033" height="1600" alt="A watercolour of the poster for Wong Kar-wai's Fallen Angels: seen from behind, a rider on a motorbike with a red tail light heads into a green-lit tunnel, a double line running along the road.">
+        </figure>
+      </section>
+      <section class="leaf leaf--right leaf--plate leaf--portrait" hidden>
+        <p class="plate-note">There are TV shows, and then there are historically devastating stories of brutal yet time-honored conformity, transformed into a postmodern medium. This is one of them, and you'll never forget it.</p>
+        <figure class="plate">
+          <img src="images/shogun_poster_watercolor.webp" width="1096" height="1600" alt="A watercolour of a poster for the series Shōgun: a woman with long dark hair kneels in a pale robe, seen from behind, with strokes of red against a teal background.">
+        </figure>
+      </section>
     </div>
+    <p class="turn-hint" hidden><span class="turn-count"></span></p>
+    <script src="turn.js"></script>
     <script src="close.js"></script>
   </main>
 
