@@ -466,29 +466,33 @@ body { position: relative; }
   position: absolute; top: 100%; left: 0; right: 0; margin-top: 9px;
   font-size: 11px; line-height: 1.4; color: var(--muted);
 }
-/* a note above a painting (.spread--noted, p.plate-note before the figure): the pictures are made
-   shorter to leave room for it, so that the book still fits the window, and sit at the foot of their
-   pages, so that the two stay level; the notes start at the head of their pages, so a shorter one
-   leaves its space between itself and the picture */
-.spread--noted .leaf--portrait { flex-direction: column; justify-content: flex-end; }
-.spread--noted .leaf--portrait img { max-height: min(50vh, 700px); }
-.leaf .plate-note { align-self: stretch; margin: 0 0 auto; }
+/* a note above a painting (.spread--noted, p.plate-note before the figure): the note starts at the head
+   of its page and the picture follows straight after it, with no gap between the two. The picture is
+   then made as tall as the room left on the page allows: plates.js measures that room and hands it
+   over as --plate-h (without the script, the pictures are simply kept short enough to fit the window).
+   A picture that is as wide as the page before it is that tall leaves its spare room at the foot. */
+.spread--noted .leaf--portrait { flex-direction: column; justify-content: flex-start; }
+.spread--noted .leaf--portrait img { max-height: var(--plate-h, min(50vh, 700px)); }
+.leaf .plate-note { align-self: stretch; margin: 0; }
+/* two notes on one page: a paragraph's space apart */
+.plate-note + .plate-note { margin-top: .9em; }
 .plate-note + .plate { margin-top: 1.2em; }
-/* a wide picture (a photograph) with a note above it: laid out the same way - note at the head of
-   the page, picture at its foot - and no taller than the paintings, so the book still fits the window */
-.spread--noted .leaf--landscape { flex-direction: column; justify-content: flex-end; }
-.spread--noted .leaf--landscape img { width: auto; max-width: 100%; max-height: min(50vh, 700px); }
+/* (while plates.js measures the pages, the pictures are at their smallest: no page gives its picture less than this) */
+.spread--noted.is-fitting .leaf.leaf--plate img { max-height: 240px; }
+/* a wide picture (a photograph) with a note above it: laid out the same way */
+.spread--noted .leaf--landscape { flex-direction: column; justify-content: flex-start; padding-bottom: clamp(58px, 6vw, 78px); }  /* room for a caption, as on the paintings' pages */
+.spread--noted .leaf--landscape img { width: auto; max-width: 100%; max-height: var(--plate-h, min(50vh, 700px)); }
 /* a noted book with more than two pages: the pages out of sight keep their place in the book (unseen,
-   one behind the other) instead of being taken out, so the book is as tall as its tallest page and
-   does not change size as the pages turn */
+   one behind the other) instead of being taken out, so the book does not change size as the pages
+   turn. It is about as tall as the window allows - taller only if a page's notes need the room. */
 @media (min-width: 821px) {
-  .spread--turn.spread--noted .leaf { grid-row: 1; }
+  .spread--turn.spread--noted .leaf { grid-row: 1; min-height: min(78vh, 780px); }
   .spread--turn.spread--noted .leaf--left { grid-column: 1; }
   .spread--turn.spread--noted .leaf--right { grid-column: 2; }
   .spread--turn.spread--noted .leaf[hidden] { display: flex; visibility: hidden; }
 }
 @media (max-width: 820px) {
-  .leaf--portrait { padding-bottom: clamp(14px, 2.6vw, 38px); }
+  .leaf--portrait, .spread--noted .leaf--landscape { padding-bottom: clamp(14px, 2.6vw, 38px); }
   .leaf--portrait img { width: 100%; max-height: none; }
   .spread--noted .leaf--landscape img { width: 100%; max-height: none; }
   .plate figcaption { position: static; }
